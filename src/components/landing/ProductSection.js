@@ -12,8 +12,8 @@ export default function ProductSection() {
               Ürün Tanıtımı
             </h2>
             <p className="mt-2 max-w-xl text-sm leading-6 text-zinc-600">
-              Aşağıdaki alanlar tek ürün için tasarlandı. Ürün adı, fiyat ve
-              içerikleri kendi içeriğinize göre düzenleyin.
+             Ürün adı, fiyat ve
+              içerikleri kendi içeriğe göre düzenlenecek.
             </p>
           </div>
           <div className="hidden items-center gap-2 sm:flex">
@@ -106,7 +106,7 @@ export default function ProductSection() {
               Satın Alma
             </div>
             <p className="mt-3 text-sm leading-6 text-zinc-600">
-              Tek ürün için birincil aksiyonu burada toplayın: satın alma, teklif
+              Satın alma, teklif
               formu veya WhatsApp yönlendirmesi.
             </p>
             <a

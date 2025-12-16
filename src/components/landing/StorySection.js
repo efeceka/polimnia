@@ -26,9 +26,8 @@ export default function StorySection() {
             Sadelik bir seçimdir.
           </h2>
           <p className="mt-6 text-sm leading-7 text-zinc-200 sm:text-base">
-            Bu geniş bant alanı, görsel şablondaki büyük banner mantığını tek ürün
-            hikâyesi için yeniden kurgular. Buraya kısa bir manifesto, üretim
-            yaklaşımı veya sürdürülebilirlik notları ekleyin.
+            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nobis rerum fugit autem ex! Ipsum reiciendis libero doloribus, quas voluptas, illum quisquam accusantium sapiente explicabo accusamus necessitatibus dolore numquam illo unde. 
+            
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <a

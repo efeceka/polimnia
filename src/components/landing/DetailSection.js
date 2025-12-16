@@ -13,8 +13,10 @@ export default function DetailSection() {
               Günlük kullanıma uygun, minimal deneyim
             </h3>
             <p className="mt-3 max-w-xl text-sm leading-6 text-zinc-600">
-              Bülten bölümünü kaldırdım. Bunun yerine tek ürün sayfası için hızlı
-              bilgi alanı ekledim.
+              bilgi alanı. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+              Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+              enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+              aliquip ex ea commodo consequat.
             </p>
 
             <div className="mt-8 grid gap-4 sm:grid-cols-3">
