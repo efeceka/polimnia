@@ -3,6 +3,10 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --brand-gold: #b08a2c;
+  --brand-olive: #8a8f54;
+  --hero-gray: #6b6b6b;
+  --page-bg: #f4f4f2;
 }
 
 @theme inline {
@@ -19,8 +23,13 @@
   }
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
-  background: var(--background);
+  background: var(--page-bg);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans), ui-sans-serif, system-ui, -apple-system,
+    "Segoe UI", Arial, "Noto Sans", "Liberation Sans", sans-serif;
 }
