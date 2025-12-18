@@ -1,60 +1,26 @@
-import Image from "next/image";
-
-import Feature from "./Feature";
-import { BRAND } from "./content";
-import { CreditCard, Headset, RefreshCcw, Truck } from "lucide-react";
-
 export default function GallerySection() {
+  const cards = Array.from({ length: 8 }).map((_, index) => ({
+    id: index,
+  }));
+
   return (
-    <section id="galeri" className="bg-white">
-      <div className="mx-auto max-w-6xl px-6 py-16">
-        <div className="flex items-end justify-between gap-6">
-          <h2 className="text-lg font-semibold tracking-wide text-zinc-900">
-            On the Gram
-          </h2>
-          <div className="text-xs tracking-[0.22em] text-zinc-500">
-            {BRAND.handle}
+    <section id="galeri" className="bg-[color:var(--page-bg)]">
+      <div className="mx-auto max-w-7xl px-6 py-10 sm:py-14">
+        <div className="rounded-[44px] bg-[#eef0eb] px-8 py-10 sm:px-12 sm:py-12 lg:px-14 lg:py-14">
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            {cards.map((card, index) => (
+              <div
+                key={card.id}
+                className="grid aspect-square place-items-center rounded-2xl bg-white shadow-sm"
+              >
+                {index === 0 ? (
+                  <div className="px-6 text-center text-xl font-extrabold tracking-wide text-[#2f5b59]">
+                    SİZDEN GELENLER
+                  </div>
+                ) : null}
+              </div>
+            ))}
           </div>
-        </div>
-
-        <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {Array.from({ length: 6 }).map((_, i) => (
-            <div
-              key={i}
-              className="group relative aspect-[4/3] overflow-hidden rounded-2xl border border-zinc-200 bg-zinc-100"
-            >
-              <Image
-                src={`/image/${(i % 3) + 1}.jpg`}
-                alt={`Galeri görseli ${i + 1}`}
-                fill
-                className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-zinc-900/35 via-transparent to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
-            </div>
-          ))}
-        </div>
-
-        <div className="mt-14 grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
-          <Feature
-            title="Ücretsiz Kargo"
-            description="Belirli tutar üzeri gönderim."
-            icon={<Truck className="h-5 w-5" />}
-          />
-          <Feature
-            title="Kolay İade"
-            description="Hızlı değişim ve iade süreci."
-            icon={<RefreshCcw className="h-5 w-5" />}
-          />
-          <Feature
-            title="Online Destek"
-            description="Haftanın 7 günü yardımcı oluruz."
-            icon={<Headset className="h-5 w-5" />}
-          />
-          <Feature
-            title="Güvenli Ödeme"
-            description="Kart ve alternatif yöntemler."
-            icon={<CreditCard className="h-5 w-5" />}
-          />
         </div>
       </div>
     </section>

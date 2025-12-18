@@ -36,4 +36,3 @@ export const SOCIAL_LINKS = [
   { label: "X (Twitter)", href: "#" },
   { label: "Facebook", href: "#" },
 ];
-

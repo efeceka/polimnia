@@ -1,93 +1,126 @@
-import BrandLogo from "./BrandLogo";
-import SocialLinks from "./SocialLinks";
+import Image from "next/image";
+import { Facebook, Instagram, Youtube } from "lucide-react";
+
+import { BRAND, SOCIAL_LINKS } from "./content";
+
+const SOCIAL_ICONS = {
+  Instagram,
+  YouTube: Youtube,
+  Facebook,
+};
+
+const FOOTER_LINKS = [
+  "Aydınlatma Metni",
+  "Çerez Politikası",
+  "Gizlilik Politikası",
+  "Kullanım Koşulları",
+  "KVKK",
+  "Mesafeli Satış Sözleşmesi",
+];
+
+function SocialLinks({ className = "" }) {
+  return (
+    <div className={`flex items-center gap-3 ${className}`}>
+      {SOCIAL_LINKS.filter((s) => s.label !== "X (Twitter)").map((social) => {
+        const LucideIcon = SOCIAL_ICONS[social.label];
+        if (!LucideIcon) return null;
+        return (
+          <a
+            key={social.label}
+            href={social.href}
+            aria-label={social.label}
+            target="_blank"
+            rel="noreferrer"
+            className="grid h-11 w-11 place-items-center rounded-xl bg-[#d8cfc7] text-white transition-colors hover:bg-[color:var(--brand-gold)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[color:var(--brand-gold)]"
+          >
+            <LucideIcon className="h-5 w-5 text-white/90" />
+          </a>
+        );
+      })}
+    </div>
+  );
+}
 
 export default function ContactSection() {
   return (
-    <section id="iletisim" className="bg-[#eef0ed]">
-      <div className="mx-auto max-w-6xl px-6 py-16">
-        <div className="grid gap-8 rounded-2xl border border-zinc-200 bg-white p-8 lg:grid-cols-2">
-          <div className="flex flex-col items-center justify-between gap-8 lg:items-start lg:pr-10 lg:border-r lg:border-zinc-200">
-            <BrandLogo
-              variant="footer"
-              className="h-40 w-full max-w-[620px] sm:h-44 lg:h-96"
-            />
-
-            <div className="flex flex-col items-center gap-3">
-              <div className="text-xs tracking-[0.28em] uppercase text-zinc-500">
-                Follow us
+    <section id="iletisim" className="bg-[color:var(--page-bg)]">
+      <div className="mx-auto max-w-7xl px-6 py-10 sm:py-14">
+        <div className="overflow-hidden rounded-[44px] bg-[#f4ede7]">
+          <div className="grid gap-10 px-8 py-10 sm:px-12 sm:py-12 lg:grid-cols-[340px_1fr] lg:gap-12 lg:px-14 lg:py-14">
+            <div className="flex flex-col items-center justify-between gap-8">
+              <div className="relative w-full max-w-[240px]">
+                <Image
+                  src="/image/logof.png"
+                  alt={`${BRAND.name} logo`}
+                  width={512}
+                  height={768}
+                  className="h-auto w-full object-contain"
+                  priority
+                />
               </div>
-              <SocialLinks itemClassName="h-8 w-8" iconClassName="h-5 w-5" className="gap-3" />
+
+              <SocialLinks className="justify-center" />
+            </div>
+
+            <div>
+              <form className="grid gap-5 lg:grid-cols-[1fr_1fr]">
+                <div className="grid gap-5">
+                  {[
+                    ["Name", "name"],
+                    ["Company", "company"],
+                    ["City", "city"],
+                  ].map(([placeholder, name]) => (
+                    <input
+                      key={name}
+                      type="text"
+                      name={name}
+                      placeholder={placeholder}
+                      className="h-16 w-full rounded-none bg-[#d8cfc7] px-6 text-lg text-white placeholder:text-white/90 outline-none ring-0 focus:bg-[#cfc4bb]"
+                    />
+                  ))}
+                </div>
+
+                <textarea
+                  name="note"
+                  placeholder="Not"
+                  className="h-[232px] w-full resize-none rounded-none bg-[#d8cfc7] px-6 py-5 text-lg text-white placeholder:text-white/90 outline-none ring-0 focus:bg-[#cfc4bb] lg:h-full"
+                />
+
+                <div className="lg:col-span-2 flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
+                  <div className="text-base leading-7 text-[#8b8076]">
+                    Altıntepe Mh. Köknarlı Sok. Köknar Apt. D blok D:18
+                    Maltepe/İstanbul
+                    <div className="mt-2">+90 549 800 89 21</div>
+                  </div>
+
+                  <button
+                    type="submit"
+                    className="h-14 w-full max-w-[220px] bg-[color:var(--brand-gold)] px-10 text-base font-semibold tracking-wide text-white transition-colors hover:bg-[#9b761f] lg:ml-auto"
+                  >
+                    SUBMIT
+                  </button>
+                </div>
+              </form>
             </div>
           </div>
 
-          <form className="grid gap-4 lg:grid-cols-2 lg:pl-10">
-            <div className="lg:col-span-1">
-              <label className="text-xs tracking-[0.28em] uppercase text-zinc-500">
-                İsim
-                <input
-                  type="text"
-                  name="name"
-                  className="mt-2 h-11 w-full rounded-xl border border-zinc-200 bg-white px-4 text-sm outline-none focus:border-[color:var(--brand-gold)]"
-                  placeholder="Ad Soyad"
-                />
-              </label>
-            </div>
-            <div className="lg:col-span-1">
-              <label className="text-xs tracking-[0.28em] uppercase text-zinc-500">
-                Şirket
-                <input
-                  type="text"
-                  name="company"
-                  className="mt-2 h-11 w-full rounded-xl border border-zinc-200 bg-white px-4 text-sm outline-none focus:border-[color:var(--brand-gold)]"
-                  placeholder="Şirket / Marka"
-                />
-              </label>
-            </div>
-            <div className="lg:col-span-1">
-              <label className="text-xs tracking-[0.28em] uppercase text-zinc-500">
-                Şehir
-                <input
-                  type="text"
-                  name="city"
-                  className="mt-2 h-11 w-full rounded-xl border border-zinc-200 bg-white px-4 text-sm outline-none focus:border-[color:var(--brand-gold)]"
-                  placeholder="İstanbul"
-                />
-              </label>
-            </div>
-            <div className="lg:col-span-1">
-              <label className="text-xs tracking-[0.28em] uppercase text-zinc-500">
-                E‑posta
-                <input
-                  type="email"
-                  name="email"
-                  className="mt-2 h-11 w-full rounded-xl border border-zinc-200 bg-white px-4 text-sm outline-none focus:border-[color:var(--brand-gold)]"
-                  placeholder="mail@ornek.com"
-                />
-              </label>
-            </div>
-            <div className="lg:col-span-2">
-              <label className="text-xs tracking-[0.28em] uppercase text-zinc-500">
-                Not
-                <textarea
-                  name="note"
-                  rows={6}
-                  className="mt-2 w-full resize-none rounded-xl border border-zinc-200 bg-white px-4 py-3 text-sm outline-none focus:border-[color:var(--brand-gold)]"
-                  placeholder="Mesajınız..."
-                />
-              </label>
-            </div>
-            <div className="lg:col-span-2 flex items-center justify-between gap-4 pt-2">
-              <div className="text-xs leading-5 text-zinc-500">
-                Form aksiyonunu (mail/CRM) ihtiyacınıza göre bağlayın.
+          <div className="border-t border-white/40 bg-[#efe7e1] px-8 py-6 sm:px-12 lg:px-14">
+            <div className="flex flex-col items-center justify-between gap-4 lg:flex-row">
+              <div className="hidden lg:block">
+                <div className="h-1 w-10 rounded bg-[#d8cfc7]" />
               </div>
-              <button
-                type="submit"
-                className="inline-flex h-11 items-center justify-center rounded-full bg-zinc-900 px-6 text-xs font-semibold tracking-[0.22em] text-white uppercase transition-colors hover:bg-zinc-700"
-              >
-                Gönder
-              </button>
+              <nav className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm text-[#8b8076]">
+                {FOOTER_LINKS.map((label) => (
+                  <a key={label} href="#" className="hover:text-[#6f655d]">
+                    {label}
+                  </a>
+                ))}
+              </nav>
+              <div className="hidden lg:block">
+                <div className="h-1 w-10 rounded bg-[#d8cfc7]" />
+              </div>
             </div>
-          </form>
+          </div>
         </div>
       </div>
     </section>

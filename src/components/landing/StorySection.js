@@ -1,51 +1,44 @@
 import Image from "next/image";
 
 export default function StorySection() {
-  return (
-    <section
-      id="hikaye"
-      className="relative overflow-hidden bg-[color:var(--hero-gray)]"
-    >
-      <div className="absolute inset-0">
-        <Image
-          src="/image/4.jpg"
-          alt="Marka hikayesi görseli"
-          fill
-          className="object-cover"
-        />
-        <div className="absolute inset-0 bg-zinc-900/55" />
-        <div className="absolute inset-0 bg-gradient-to-b from-zinc-900/40 via-zinc-900/45 to-zinc-900/70" />
-      </div>
+  const BANNER = {
+    title: "PRATİK\nVE HİJYENİK",
+    description:
+      "Polyester, pamuk, ipek, yün ve daha bir çok kumaş türünde güvenle kullanılabilir. Hassas kumaşlarda bile liflere zarar vermeden etkili sonuç verir.",
+    imageSrc: "/image/pratik.webp",
+  };
 
-      <div className="relative mx-auto max-w-6xl px-6 py-20">
-        <div className="max-w-2xl">
-          <div className="text-xs tracking-[0.45em] uppercase text-zinc-200">
-            Marka Hikâyesi
-          </div>
-          <h2 className="mt-4 text-3xl font-medium tracking-[0.18em] text-[color:var(--brand-gold)] sm:text-4xl">
-            Sadelik bir seçimdir.
-          </h2>
-          <p className="mt-6 text-sm leading-7 text-zinc-200 sm:text-base">
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nobis rerum fugit autem ex! Ipsum reiciendis libero doloribus, quas voluptas, illum quisquam accusantium sapiente explicabo accusamus necessitatibus dolore numquam illo unde. 
-            
-          </p>
-          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-            <a
-              href="#galeri"
-              className="inline-flex h-11 items-center justify-center rounded-full bg-white px-6 text-xs font-semibold tracking-[0.22em] text-zinc-900 uppercase transition-colors hover:bg-zinc-100"
-            >
-              Galeriyi Gör
-            </a>
-            <a
-              href="#iletisim"
-              className="inline-flex h-11 items-center justify-center rounded-full border border-white/30 bg-transparent px-6 text-xs font-semibold tracking-[0.22em] text-white uppercase transition-colors hover:bg-white/10"
-            >
-              İletişim
-            </a>
+  return (
+    <section id="hikaye" className="bg-[color:var(--page-bg)]">
+      <div className="mx-auto max-w-8xl px-6 py-10 sm:py-14">
+        <div className="relative overflow-hidden rounded-[40px] border border-zinc-200 bg-[#9b98b7]">
+          <Image
+            src={BANNER.imageSrc}
+            alt=""
+            fill
+            sizes="100vw"
+            className="object-cover object-right"
+            priority
+          />
+
+          <div className="absolute inset-0 bg-gradient-to-r from-[#9b98b7] via-[#9b98b7]/35 to-transparent" />
+
+          <div className="relative px-8 py-12 sm:px-12 sm:py-14 lg:px-16 lg:py-16">
+            <div className="max-w-[620px]">
+              <h2 className="text-5xl font-extrabold leading-[0.95] tracking-tight text-white sm:text-6xl lg:text-7xl">
+                {BANNER.title.split("\n").map((line, idx) => (
+                  <span key={idx} className="block">
+                    {line}
+                  </span>
+                ))}
+              </h2>
+              <p className="mt-6 max-w-[560px] text-lg leading-7 text-white/90">
+                {BANNER.description}
+              </p>
+            </div>
           </div>
         </div>
       </div>
     </section>
   );
 }
-
