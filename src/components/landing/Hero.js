@@ -91,8 +91,17 @@ export default function Hero() {
         ))}
       </div>
 
+      <div className="pointer-events-none absolute inset-0 z-10 flex items-center justify-center px-6 text-center">
+        <h1
+          className="font-serif text-3xl font-medium uppercase tracking-[0.28em] text-[#f05a00] sm:text-4xl md:text-5xl lg:text-6xl"
+          style={{ textShadow: "0 2px 12px rgba(0,0,0,0.25)" }}
+        >
+          INSPIRING SIMPLICITY
+        </h1>
+      </div>
+
       {slides.length > 1 ? (
-        <div className="pointer-events-auto absolute bottom-5 left-1/2 z-10 flex -translate-x-1/2 items-center gap-2">
+        <div className="pointer-events-auto absolute bottom-5 left-1/2 z-20 flex -translate-x-1/2 items-center gap-2">
           {slides.map((_, i) => {
             const isActive = i === displayIndex;
             return (

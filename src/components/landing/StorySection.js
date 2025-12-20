@@ -6,6 +6,7 @@ export default function StorySection() {
     description:
       "Polyester, pamuk, ipek, yün ve daha bir çok kumaş türünde güvenle kullanılabilir. Hassas kumaşlarda bile liflere zarar vermeden etkili sonuç verir.",
     imageSrc: "/image/pratik.webp",
+    badgeSrc: "/image/100deyuz.png",
   };
 
   return (
@@ -22,6 +23,17 @@ export default function StorySection() {
           />
 
           <div className="absolute inset-0 bg-gradient-to-r from-[#9b98b7] via-[#9b98b7]/35 to-transparent" />
+
+          <div className="pointer-events-none absolute right-6 top-6 z-10 hidden sm:block sm:right-8 sm:top-8 lg:right-10 lg:top-10">
+            <Image
+              src={BANNER.badgeSrc}
+              alt=""
+              width={220}
+              height={220}
+              sizes="(min-width: 1024px) 160px, 120px"
+              className="h-auto w-28 drop-shadow-sm sm:w-32 lg:w-40"
+            />
+          </div>
 
           <div className="relative px-8 py-12 sm:px-12 sm:py-14 lg:px-16 lg:py-16">
             <div className="max-w-[620px]">

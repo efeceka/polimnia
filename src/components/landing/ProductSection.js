@@ -4,6 +4,7 @@ const PRODUCT = {
   title: "KIRIŞIKLIK GİDERİCİ\nSPREY",
   imageSrc: "/image/brandbook.webp",
   imageAlt: "Kırışıklık giderici sprey ürün görseli",
+  badgeSrc: "/image/spray.png",
   blocks: [
     {
       lead: "ÜTÜLEMEYİN",
@@ -43,13 +44,26 @@ export default function ProductSection() {
         </div>
 
         <div className="pt-2">
-          <h2 className="text-4xl font-extrabold leading-[1.05] tracking-tight text-[#f05a00] sm:text-5xl">
-            {PRODUCT.title.split("\n").map((line, idx) => (
-              <span key={idx} className="block">
-                {line}
-              </span>
-            ))}
-          </h2>
+          <div className="flex items-start justify-between gap-6">
+            <h2 className="text-4xl font-extrabold leading-[1.05] tracking-tight text-[#f05a00] sm:text-5xl">
+              {PRODUCT.title.split("\n").map((line, idx) => (
+                <span key={idx} className="block">
+                  {line}
+                </span>
+              ))}
+            </h2>
+
+            <div className="relative mt-1 hidden shrink-0 sm:block">
+              <Image
+                src={PRODUCT.badgeSrc}
+                alt=""
+                width={280}
+                height={280}
+                sizes="(min-width: 1024px) 200px, 160px"
+                className="h-auto w-32 sm:w-40 lg:w-52"
+              />
+            </div>
+          </div>
 
           <div className="mt-6 h-px w-full bg-[#f05a00]/55" />
 
