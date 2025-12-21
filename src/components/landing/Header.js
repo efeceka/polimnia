@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Facebook, Instagram, Menu, X, Youtube } from "lucide-react";
 
@@ -49,8 +50,65 @@ function SocialLinks({ className = "", itemClassName = "", iconClassName = "" })
   );
 }
 
-export default function Header() {
+const NAV_LABELS = {
+  tr: {
+    product: "Ürün",
+    story: "Hikâye",
+    gallery: "Galeri",
+    contact: "İletişim",
+  },
+  en: {
+    product: "Product",
+    story: "About",
+    gallery: "Gallery",
+    contact: "Contact",
+  },
+};
+
+const A11Y = {
+  tr: {
+    home: "ana sayfa",
+    openMenu: "Menüyü aç",
+    closeMenu: "Menüyü kapat",
+    tr: "Türkçe",
+    en: "English",
+  },
+  en: {
+    home: "home",
+    openMenu: "Open menu",
+    closeMenu: "Close menu",
+    tr: "Turkish",
+    en: "English",
+  },
+};
+
+function normalizeLocale(value) {
+  return value === "en" ? "en" : "tr";
+}
+
+function normalizeBasePath(value) {
+  if (!value) return "";
+  let basePath = String(value).trim();
+  if (!basePath || basePath === "/") return "";
+  if (!basePath.startsWith("/")) basePath = `/${basePath}`;
+  return basePath.replace(/\/+$/, "");
+}
+
+function stripBasePath(pathname, basePath) {
+  if (!basePath) return pathname;
+  if (pathname === basePath) return "/";
+  return pathname.startsWith(`${basePath}/`) ? pathname.slice(basePath.length) : pathname;
+}
+
+export default function Header({ locale }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const pathname = usePathname();
+  const basePath = normalizeBasePath(process.env.NEXT_PUBLIC_BASE_PATH);
+  const currentPathname = stripBasePath(pathname || "/", basePath);
+  const inferredLocale = currentPathname.startsWith("/en") ? "en" : "tr";
+  const activeLocale = normalizeLocale(locale || inferredLocale);
+  const labels = NAV_LABELS[activeLocale];
+  const a11y = A11Y[activeLocale];
 
   useEffect(() => {
     const header = document.querySelector("[data-site-header]");
@@ -74,6 +132,16 @@ export default function Header() {
     };
   }, []);
 
+  useEffect(() => {
+    document.documentElement.lang = activeLocale;
+  }, [activeLocale]);
+
+  const localeHref = (targetLocale) => {
+    const prefix = basePath || "";
+    const target = normalizeLocale(targetLocale);
+    return `${prefix}/${target}/`;
+  };
+
   return (
     <>
       <header
@@ -88,7 +156,7 @@ export default function Header() {
           <a
             href="#top"
             className="md:hidden absolute left-1/2 -translate-x-1/2 flex items-center justify-center focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[color:var(--brand-gold)]"
-            aria-label={`${BRAND.name} ana sayfa`}
+            aria-label={`${BRAND.name} ${a11y.home}`}
           >
             <BrandLogo className="h-8" />
           </a>
@@ -100,14 +168,18 @@ export default function Header() {
                 href={link.href}
                 className="transition-colors hover:text-zinc-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[color:var(--brand-gold)]"
               >
-                {link.label}
+                {link.href === "#urun"
+                  ? labels.product
+                  : link.href === "#hikaye"
+                    ? labels.story
+                    : link.label}
               </a>
             ))}
 
             <a
               href="#top"
               className="mx-2 flex items-center justify-center focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[color:var(--brand-gold)]"
-              aria-label={`${BRAND.name} ana sayfa`}
+              aria-label={`${BRAND.name} ${a11y.home}`}
             >
               <BrandLogo className="h-9" />
             </a>
@@ -118,25 +190,41 @@ export default function Header() {
                 href={link.href}
                 className="transition-colors hover:text-zinc-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[color:var(--brand-gold)]"
               >
-                {link.label}
+                {link.href === "#galeri"
+                  ? labels.gallery
+                  : link.href === "#iletisim"
+                    ? labels.contact
+                    : link.label}
               </a>
             ))}
           </nav>
 
           <div className="relative z-10 flex items-center justify-end gap-3">
             <div className="hidden items-center gap-2 text-xs tracking-[0.28em] text-zinc-600 md:flex">
-              <a className="hover:text-zinc-900" href="#" aria-label="Türkçe">
+              <a
+                className={`hover:text-zinc-900 ${
+                  activeLocale === "tr" ? "font-semibold text-zinc-900" : ""
+                }`}
+                href={localeHref("tr")}
+                aria-label="Türkçe"
+              >
                 TR
               </a>
               <span className="text-zinc-300">/</span>
-              <a className="hover:text-zinc-900" href="#" aria-label="English">
+              <a
+                className={`hover:text-zinc-900 ${
+                  activeLocale === "en" ? "font-semibold text-zinc-900" : ""
+                }`}
+                href={localeHref("en")}
+                aria-label="English"
+              >
                 EN
               </a>
             </div>
 
             <button
               type="button"
-              aria-label={mobileMenuOpen ? "Menüyü kapat" : "Menüyü aç"}
+              aria-label={mobileMenuOpen ? a11y.closeMenu : a11y.openMenu}
               aria-expanded={mobileMenuOpen ? "true" : "false"}
               aria-controls="mobile-menu"
               onClick={() => setMobileMenuOpen((v) => !v)}
@@ -168,7 +256,15 @@ export default function Header() {
                       onClick={() => setMobileMenuOpen(false)}
                       className="block rounded-2xl px-4 py-3 hover:bg-zinc-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[color:var(--brand-gold)]"
                     >
-                      {link.label}
+                      {link.href === "#urun"
+                        ? labels.product
+                        : link.href === "#hikaye"
+                          ? labels.story
+                          : link.href === "#galeri"
+                            ? labels.gallery
+                            : link.href === "#iletisim"
+                              ? labels.contact
+                              : link.label}
                     </a>
                   ))}
                 </nav>
@@ -178,11 +274,23 @@ export default function Header() {
                   <div className="mt-5 flex flex-col items-center gap-4">
                     <SocialLinks />
                     <div className="flex items-center gap-2 text-xs tracking-[0.28em] text-zinc-600">
-                      <a className="hover:text-zinc-900" href="#" aria-label="Türkçe">
+                      <a
+                        className={`hover:text-zinc-900 ${
+                          activeLocale === "tr" ? "font-semibold text-zinc-900" : ""
+                        }`}
+                        href={localeHref("tr")}
+                        aria-label="Türkçe"
+                      >
                         TR
                       </a>
                       <span className="text-zinc-300">/</span>
-                      <a className="hover:text-zinc-900" href="#" aria-label="English">
+                      <a
+                        className={`hover:text-zinc-900 ${
+                          activeLocale === "en" ? "font-semibold text-zinc-900" : ""
+                        }`}
+                        href={localeHref("en")}
+                        aria-label="English"
+                      >
                         EN
                       </a>
                     </div>

@@ -22,6 +22,32 @@ You can start editing the page by modifying `src/app/page.js`. The page auto-upd
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
+## Static Hosting (out/)
+
+This project is configured for static export.
+
+1. Build the static site:
+
+```bash
+npm run build
+```
+
+2. Upload the generated `out/` folder to your static hosting provider.
+
+**Preview locally**
+
+```bash
+npm run preview
+```
+
+**Deploying under a subpath (optional)**
+
+If your hosting serves the site under a subpath (example: `https://domain.com/polimnia`), build with:
+
+```bash
+NEXT_PUBLIC_BASE_PATH=/polimnia npm run build
+```
+
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:

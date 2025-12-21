@@ -1,13 +1,30 @@
 import Image from "next/image";
 
-export default function StorySection() {
-  const BANNER = {
+const COPY = {
+  tr: {
     title: "PRATİK\nVE HİJYENİK",
     description:
       "Polyester, pamuk, ipek, yün ve daha bir çok kumaş türünde güvenle kullanılabilir. Hassas kumaşlarda bile liflere zarar vermeden etkili sonuç verir.",
-    imageSrc: "/image/pratik.webp",
-    badgeSrc: "/image/100deyuz.png",
-  };
+  },
+  en: {
+    title: "PRACTICAL\n& HYGIENIC",
+    description:
+      "Safe to use on polyester, cotton, silk, wool, and many other fabrics. Delivers effective results without damaging fibers, even on delicate materials.",
+  },
+};
+
+const MEDIA = {
+  imageSrc: "/image/pratik.webp",
+  badgeSrc: "/image/100deyuz.png",
+};
+
+function normalizeLocale(value) {
+  return value === "en" ? "en" : "tr";
+}
+
+export default function StorySection({ locale }) {
+  const activeLocale = normalizeLocale(locale);
+  const BANNER = { ...COPY[activeLocale], ...MEDIA };
 
   return (
     <section id="hikaye" className="bg-[color:var(--page-bg)]">

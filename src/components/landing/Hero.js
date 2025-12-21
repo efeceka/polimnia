@@ -44,10 +44,41 @@ export default function Hero() {
   useEffect(() => {
     if (slides.length <= 1) return;
     const id = window.setInterval(() => {
+      if (document.hidden) return;
       setTransitionEnabled(true);
-      setActiveIndex((i) => i + 1);
+      setActiveIndex((i) => {
+        const maxIndex = slides.length + 1; // includes clone
+        const next = i + 1;
+        return next > maxIndex ? 1 : next;
+      });
     }, 4500);
     return () => window.clearInterval(id);
+  }, [slides.length]);
+
+  useEffect(() => {
+    if (slides.length <= 1) return;
+
+    const normalizeIndex = () => {
+      if (document.hidden) return;
+
+      setTransitionEnabled(false);
+      setActiveIndex((i) => {
+        const span = slides.length + 2; // [cloneLast, ...slides, cloneFirst]
+        const normalized = ((i % span) + span) % span;
+        if (normalized === 0) return slides.length; // cloneLast -> last real
+        if (normalized === slides.length + 1) return 1; // cloneFirst -> first real
+        return normalized;
+      });
+      requestAnimationFrame(() => requestAnimationFrame(() => setTransitionEnabled(true)));
+    };
+
+    document.addEventListener("visibilitychange", normalizeIndex);
+    window.addEventListener("focus", normalizeIndex);
+
+    return () => {
+      document.removeEventListener("visibilitychange", normalizeIndex);
+      window.removeEventListener("focus", normalizeIndex);
+    };
   }, [slides.length]);
 
   return (

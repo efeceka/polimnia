@@ -1,40 +1,76 @@
 import Image from "next/image";
 
-const PRODUCT = {
-  title: "KIRIŞIKLIK GİDERİCİ\nSPREY",
-  imageSrc: "/image/brandbook.webp",
-  imageAlt: "Kırışıklık giderici sprey ürün görseli",
-  badgeSrc: "/image/spray.png",
-  blocks: [
-    {
-      lead: "ÜTÜLEMEYİN",
-      text:
-        "Ütü yapmak için zaman kaybetmekten yorulduysanız, bu kırışıklık giderici sizin için bir alternatiftir. Dakikalar içinde kırışıklıkları azaltmak için perdelerde, masa örtüleri ve daha fazlasında kullanın.",
-    },
-    {
-      lead: "KOLAY KULLANIM",
-      text:
-        "Kumaş kırışıklık spreyini püskürtün, pürüzsüzleştirin ve tamamen kuruyana kadar asın. Bütün kumaş tiplerinde etkilidir.",
-      lead2: "PARA VE ZAMANDAN TASARRUF EDİN",
-      text2:
-        "Kullanım başına sadece kuruş maliyeti olan kuru temizleme masrafından tasarruf sağlar; enerji ve su tasarrufu sağlayan rötuş için mükemmeldir.",
-    },
-    {
-      lead: "DOĞAL VE ETKİLİ",
-      text:
-        "Bitki bazlı malzemelerle çalışan kırışıklık giderme spreyimiz, herhangi bir sülfat veya sert kimyasallar olmadan diğer markalar kadar etkilidir.",
-    },
-  ],
+const COPY = {
+  tr: {
+    title: "KIRIŞIKLIK GİDERİCİ\nSPREY",
+    imageAlt: "Kırışıklık giderici sprey ürün görseli",
+    blocks: [
+      {
+        lead: "ÜTÜLEMEYİN",
+        text:
+          "Ütü yapmak için zaman kaybetmekten yorulduysanız, bu kırışıklık giderici sizin için bir alternatiftir. Dakikalar içinde kırışıklıkları azaltmak için perdelerde, masa örtüleri ve daha fazlasında kullanın.",
+      },
+      {
+        lead: "KOLAY KULLANIM",
+        text:
+          "Kumaş kırışıklık spreyini püskürtün, pürüzsüzleştirin ve tamamen kuruyana kadar asın. Bütün kumaş tiplerinde etkilidir.",
+        lead2: "PARA VE ZAMANDAN TASARRUF EDİN",
+        text2:
+          "Kullanım başına sadece kuruş maliyeti olan kuru temizleme masrafından tasarruf sağlar; enerji ve su tasarrufu sağlayan rötuş için mükemmeldir.",
+      },
+      {
+        lead: "DOĞAL VE ETKİLİ",
+        text:
+          "Bitki bazlı malzemelerle çalışan kırışıklık giderme spreyimiz, herhangi bir sülfat veya sert kimyasallar olmadan diğer markalar kadar etkilidir.",
+      },
+    ],
+  },
+  en: {
+    title: "WRINKLE RELEASE\nSPRAY",
+    imageAlt: "Wrinkle release spray product photo",
+    blocks: [
+      {
+        lead: "NO IRONING",
+        text:
+          "If you're tired of wasting time ironing, this wrinkle release spray is a practical alternative. Use it on curtains, tablecloths, and more to reduce wrinkles in minutes.",
+      },
+      {
+        lead: "EASY TO USE",
+        text:
+          "Spray onto fabric, smooth by hand, and hang until fully dry. Effective on most fabric types.",
+        lead2: "SAVE TIME & MONEY",
+        text2:
+          "Helps reduce dry-cleaning costs and is perfect for quick touch-ups while also saving energy and water.",
+      },
+      {
+        lead: "NATURAL & EFFECTIVE",
+        text:
+          "Powered by plant-based ingredients, our spray works effectively without sulfates or harsh chemicals.",
+      },
+    ],
+  },
 };
 
-export default function ProductSection() {
+const PRODUCT_MEDIA = {
+  imageSrc: "/image/brandbook.webp",
+  badgeSrc: "/image/spray.png",
+};
+
+function normalizeLocale(value) {
+  return value === "en" ? "en" : "tr";
+}
+
+export default function ProductSection({ locale }) {
+  const activeLocale = normalizeLocale(locale);
+  const PRODUCT = COPY[activeLocale];
+
   return (
     <section id="urun" className="bg-[#f6efec]">
       <div className="mx-auto grid max-w-7xl gap-10 px-6 py-14 lg:grid-cols-[480px_1fr] lg:items-start lg:py-20">
         <div className="overflow-hidden rounded-[28px] bg-white/60 p-3 shadow-sm">
           <div className="relative aspect-[4/5] overflow-hidden rounded-[22px] bg-zinc-200">
             <Image
-              src={PRODUCT.imageSrc}
+              src={PRODUCT_MEDIA.imageSrc}
               alt={PRODUCT.imageAlt}
               fill
               className="object-cover"
@@ -55,7 +91,7 @@ export default function ProductSection() {
 
             <div className="relative mt-1 hidden shrink-0 sm:block">
               <Image
-                src={PRODUCT.badgeSrc}
+                src={PRODUCT_MEDIA.badgeSrc}
                 alt=""
                 width={280}
                 height={280}

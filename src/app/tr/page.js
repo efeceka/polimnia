@@ -1,10 +1,10 @@
-import ContactSection from "../components/landing/ContactSection";
-import DetailSection from "../components/landing/DetailSection";
-import GallerySection from "../components/landing/GallerySection";
-import Header from "../components/landing/Header";
-import Hero from "../components/landing/Hero";
-import ProductSection from "../components/landing/ProductSection";
-import StorySection from "../components/landing/StorySection";
+import ContactSection from "../../components/landing/ContactSection";
+import DetailSection from "../../components/landing/DetailSection";
+import GallerySection from "../../components/landing/GallerySection";
+import Header from "../../components/landing/Header";
+import Hero from "../../components/landing/Hero";
+import ProductSection from "../../components/landing/ProductSection";
+import StorySection from "../../components/landing/StorySection";
 
 function normalizeBasePath(value) {
   if (!value) return "";
@@ -27,16 +27,16 @@ export function generateMetadata() {
     title,
     description,
     alternates: {
-      canonical: withBase("/"),
+      canonical: withBase("/tr/"),
       languages: {
-        tr: withBase("/"),
+        tr: withBase("/tr/"),
         en: withBase("/en/"),
       },
     },
     openGraph: {
       title,
       description,
-      url: withBase("/"),
+      url: withBase("/tr/"),
       locale: "tr_TR",
       images: [{ url: ogImage }],
     },
@@ -48,7 +48,7 @@ export function generateMetadata() {
   };
 }
 
-export default function Home() {
+export default function HomeTr() {
   const locale = "tr";
 
   return (

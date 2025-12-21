@@ -1,8 +1,18 @@
 import Image from "next/image";
 
-export default function DetailSection() {
+function normalizeLocale(value) {
+  return value === "en" ? "en" : "tr";
+}
+
+const TITLES = {
+  tr: "KURUMSAL İŞ BİRLİKLERİ",
+  en: "CORPORATE PARTNERSHIPS",
+};
+
+export default function DetailSection({ locale }) {
+  const activeLocale = normalizeLocale(locale);
   const SECTION = {
-    title: "KURUMSAL İŞ BİRLİKLERİ",
+    title: TITLES[activeLocale],
     images: [
       { src: "/image/macfit.png", label: "Macfit" },
       { src: "/image/ibis.png", label: "Ibis" },

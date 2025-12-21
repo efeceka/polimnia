@@ -1,3 +1,5 @@
+"use client";
+
 import Image from "next/image";
 import { Facebook, Instagram, Youtube } from "lucide-react";
 
@@ -41,7 +43,72 @@ function SocialLinks({ className = "" }) {
   );
 }
 
-export default function ContactSection() {
+export default function ContactSection({ locale }) {
+  const activeLocale = locale === "en" ? "en" : "tr";
+  const copy =
+    activeLocale === "en"
+      ? {
+          placeholders: {
+            name: "Full Name",
+            company: "Company",
+            city: "City",
+            message: "Your message",
+          },
+          submit: "Send",
+          alerts: {
+            ok: "Message sent successfully",
+            fail: "Sending failed",
+          },
+          footerLinks: [
+            "Disclosure",
+            "Cookie Policy",
+            "Privacy Policy",
+            "Terms of Use",
+            "KVKK",
+            "Distance Sales Contract",
+          ],
+        }
+      : {
+          placeholders: {
+            name: "Ad Soyad",
+            company: "Firma",
+            city: "Şehir",
+            message: "Mesajınız",
+          },
+          submit: "Gönder",
+          alerts: {
+            ok: "Mesaj başarıyla gönderildi",
+            fail: "Gönderim başarısız",
+          },
+          footerLinks: FOOTER_LINKS,
+        };
+
+  const endpoint = `${process.env.NEXT_PUBLIC_BASE_PATH || ""}/api/contact.php`;
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+
+    const formData = new FormData(e.target);
+
+    try {
+      const res = await fetch(endpoint, {
+        method: "POST",
+        body: formData,
+      });
+
+      const data = await res.json().catch(() => null);
+
+      if (res.ok && data?.ok) {
+        alert(copy.alerts.ok);
+        e.target.reset();
+      } else {
+        alert(copy.alerts.fail);
+      }
+    } catch {
+      alert(copy.alerts.fail);
+    }
+  }
+
   return (
     <section id="iletisim" className="bg-[color:var(--page-bg)]">
       <div className="mx-auto max-w-7xl px-6 py-10 sm:py-14">
@@ -63,26 +130,34 @@ export default function ContactSection() {
             </div>
 
             <div>
-              <form className="grid gap-5 lg:grid-cols-[1fr_1fr]">
+              <form
+                onSubmit={handleSubmit}
+                action={endpoint}
+                method="post"
+                encType="multipart/form-data"
+                className="grid gap-5 lg:grid-cols-[1fr_1fr]"
+              >
                 <div className="grid gap-5">
                   {[
-                    ["Name", "name"],
-                    ["Company", "company"],
-                    ["City", "city"],
-                  ].map(([placeholder, name]) => (
+                    [copy.placeholders.name, "name", true],
+                    [copy.placeholders.company, "company", false],
+                    [copy.placeholders.city, "city", false],
+                  ].map(([placeholder, name, required]) => (
                     <input
                       key={name}
                       type="text"
                       name={name}
                       placeholder={placeholder}
+                      required={required}
                       className="h-16 w-full rounded-none bg-[#d8cfc7] px-6 text-lg text-white placeholder:text-white/90 outline-none ring-0 focus:bg-[#cfc4bb]"
                     />
                   ))}
                 </div>
 
                 <textarea
-                  name="note"
-                  placeholder="Not"
+                  name="form"
+                  placeholder={copy.placeholders.message}
+                  required
                   className="h-[232px] w-full resize-none rounded-none bg-[#d8cfc7] px-6 py-5 text-lg text-white placeholder:text-white/90 outline-none ring-0 focus:bg-[#cfc4bb] lg:h-full"
                 />
 
@@ -97,7 +172,7 @@ export default function ContactSection() {
                     type="submit"
                     className="h-14 w-full max-w-[220px] bg-[color:var(--brand-gold)] px-10 text-base font-semibold tracking-wide text-white transition-colors hover:bg-[#9b761f] lg:ml-auto"
                   >
-                    SUBMIT
+                    {copy.submit}
                   </button>
                 </div>
               </form>
@@ -110,7 +185,7 @@ export default function ContactSection() {
                 <div className="h-1 w-10 rounded bg-[#d8cfc7]" />
               </div>
               <nav className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm text-[#8b8076]">
-                {FOOTER_LINKS.map((label) => (
+                {copy.footerLinks.map((label) => (
                   <a key={label} href="#" className="hover:text-[#6f655d]">
                     {label}
                   </a>
